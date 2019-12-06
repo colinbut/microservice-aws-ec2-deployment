@@ -1,0 +1,5 @@
+[servers]
+server01 ansible_host=1.23.345.56
+
+[local]
+control ansible_connection=local
