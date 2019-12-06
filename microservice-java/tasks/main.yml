@@ -1,2 +1,6 @@
 ---
-# tasks file for microservice-java
+- name: Download app
+  command: "echo Downloading app"
+  
+- name: Start app
+  command: "java -jar microservice-java-{{ VERSION }}.jar
