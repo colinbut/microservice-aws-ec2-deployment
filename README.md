@@ -2,6 +2,8 @@
 
 This project is the deployment automation of the non-containerized java microservice: [microservice-java](https://github.com/colinbut/microservice-java.git) to the AWS EC2 instances.
 
+![image here](https://images-for-github-colinbut.s3.eu-west-2.amazonaws.com/microservice-aws-demo/microservice-aws-ec2-deployment.png)
+
 using [Ansible](https://www.ansible.com/) for __deployment automation__
 
 Ansible is an IT automation tool.
