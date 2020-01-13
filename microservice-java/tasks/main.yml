@@ -1,6 +1,15 @@
 ---
-- name: Download app
-  command: "echo Downloading app"
+
+- name: Download app from Nexus
+  maven_artifact:
+    group_id: com.example
+    artifact_id: microservice-java
+    extension: "jar"
+    repository_url: "http://localhost:8081/nexus/content/releases"
+    username: admin
+    password: password # for dev purpose just using a very unsecure password
+    keep_name: yes
+    version: "{{ VERSION }}"
   
 - name: Start app
-  command: "java -jar microservice-java-{{ VERSION }}.jar
+  command: "java -jar microservice-java-{{ VERSION }}.jar"
