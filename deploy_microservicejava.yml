@@ -1,5 +1,7 @@
 ---
  - hosts: servers
    become: true
+   vars_files:
+   - global_vars/variables.yml
    roles:
     - microservice-java

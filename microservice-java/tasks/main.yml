@@ -1,14 +1,34 @@
 ---
+- name: Stopping old app
+  shell: "kill -9 $(cat app/app.pid)"
+  ignore_errors: yes
+
+- name: Removing app dir
+  file:
+    path: /home/ec2-user/app
+    state: absent
+
+- name: Creating app dir
+  file:
+    path: /home/ec2-user/app
+    state: directory
+    mode: '0777'
+
 - name: Download app from Nexus
   maven_artifact:
+   dest: "/home/ec2-user/app/microservice-java-{{ VERSION }}.jar"
    group_id: com.example
    artifact_id: microservice-java
    extension: "jar"
-   repository_url: "http://localhost:8081/nexus/content/releases"
-   username: admin
-   password: password # for dev purpose just using a very unsecure password
+   repository_url: "{{ NEXUS_REPOSITORY_URL }}"
+   username: "{{ NEXUS_USERNAME }}"
+   password: "{{ NEXUS_PASSWORD }}" 
    keep_name: yes
    version: "{{ VERSION }}"
 
-- name: Start app
-  command: "java -jar microservice-java-{{ VERSION }}.jar"
+- name: Starting app - microservice-java-{{ VERSION }}.jar
+  shell: "nohup java -jar microservice-java-{{ VERSION }}.jar > /dev/null 2>&1 & echo $! > app.pid"
+  async: 10
+  poll: 0
+  args:
+    chdir: /home/ec2-user/app/

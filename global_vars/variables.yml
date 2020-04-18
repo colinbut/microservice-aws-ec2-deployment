@@ -1,0 +1,4 @@
+---
+NEXUS_REPOSITORY_URL: http://ec2-35-178-191-252.eu-west-2.compute.amazonaws.com:8081/repository/repository-example/
+NEXUS_USERNAME: admin
+NEXUS_PASSWORD: password # for dev purpose just using a very unsecure password
