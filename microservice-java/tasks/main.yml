@@ -20,7 +20,7 @@
    group_id: com.example
    artifact_id: microservice-java
    extension: "jar"
-   repository_url: "{{ NEXUS_REPOSITORY_URL }}"
+   repository_url: "{{ NEXUS_REPOSITORY_URL }}/microservice-java"
    username: "{{ NEXUS_USERNAME }}"
    password: "{{ NEXUS_PASSWORD }}" 
    keep_name: yes
