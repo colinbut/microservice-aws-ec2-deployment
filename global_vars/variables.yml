@@ -1,4 +1,4 @@
 ---
-NEXUS_REPOSITORY_URL: http://ec2-35-178-191-252.eu-west-2.compute.amazonaws.com:8081/repository/repository-example/
+NEXUS_REPOSITORY_URL: http://ec2-3-8-234-107.eu-west-2.compute.amazonaws.com:8081/repository/
 NEXUS_USERNAME: admin
-NEXUS_PASSWORD: password # for dev purpose just using a very unsecure password
+NEXUS_PASSWORD: password # TODO: for demo purpose just using a very unsecure password and should use Ansible Vault
