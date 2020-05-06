@@ -1,2 +1,29 @@
 ---
-# tasks file for microservice-nodejs
+- name: Stopping old app
+  shell: "kill -9 $(cat app/app.pid)"
+  ignore_errors: yes
+
+- name: Removing app dir
+  file:
+    path: /home/ec2-user/app
+    state: absent
+
+- name: Creating app dir
+  file:
+    path: /home/ec2-user/app
+    state: directory
+    mode: '0777'
+
+- name: Download app.js from Nexus
+  get_url:
+    url: "{{ NEXUS_REPOSITORY_URL }}/microservicenodejs/{{ VERSION }}/app.js"
+    dest: /home/ec2-user/app/
+    mode: 0755
+    force: yes
+
+- name: Starting app - microservice-nodejs-{{ VERSION }}.js
+  shell: "nohup node microservice-nodejs-{{ VERSION }}.js > /dev/null 2>&1 & echo $! > app.pid"
+  async: 10
+  poll: 0
+  args:
+    chdir: /home/ec2-user/app/
