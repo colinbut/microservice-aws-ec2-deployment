@@ -1,4 +1,7 @@
 ---
+- set_fact:
+    repository: {{ REPOSITORY }}
+
 - name: Stopping old app
   shell: "kill -9 $(cat app/app.pid)"
   ignore_errors: yes
@@ -15,6 +18,7 @@
     mode: '0777'
 
 - name: Download app from Nexus
+  when: repository == 'NEXUS'
   maven_artifact:
    dest: "/home/ec2-user/app/microservice-java-{{ VERSION }}.jar"
    group_id: com.example
@@ -27,6 +31,7 @@
    version: "{{ VERSION }}"
 
 - name: Download app from Artifactory
+  when: repository == 'ARTIFACTORY'
   get_url:
     dest: /home/ec2-user/app/
     url: "{{ ARTIFACTORY_REPOSITORY_URL }}/libs-release-local/com/mycompany/microservice-java/microservice-java/{{ VERSION }}/microservice-java-{{ VERSION }}.jar"

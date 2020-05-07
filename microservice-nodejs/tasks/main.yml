@@ -1,4 +1,7 @@
 ---
+- set_fact:
+    repository: {{ REPOSITORY }}
+    
 - name: Stopping old app
   shell: "kill -9 $(cat app/app.pid)"
   ignore_errors: yes
@@ -15,6 +18,7 @@
     mode: '0777'
 
 - name: Download app.js from Nexus
+  when: repository == 'NEXUS'
   get_url:
     url: "{{ NEXUS_REPOSITORY_URL }}/microservicenodejs/{{ VERSION }}/app.js"
     dest: /home/ec2-user/app/
@@ -22,6 +26,7 @@
     force: yes
 
 - name: Download app from Artifactory
+  when: repository == 'ARTIFACTORY'
   get_url:
     dest: /home/ec2-user/app/
     url: "{{ ARTIFACTORY_REPOSITORY_URL }}/generic-local/{{ VERSION }}/app.js"
