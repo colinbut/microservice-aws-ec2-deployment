@@ -10,9 +10,32 @@ Ansible is an IT automation tool.
 
 Assumes the EC2 instances have been provisioned on AWS as defined in [microservice-aws-ec2-setup](https://github.com/colinbut/microservice-aws-ec2-setup.git)
 
-__To run:__
 
+## Deploy microservice-java
+
+__To fetch artifact from Nexus:__
+
+e.g.
+```bash
+ansible-playbook -i hosts deploy_microservicejava.yml --extra-vars="VERSION=1.0.0-SNAPSHOT, REPOSITORY=NEXUS"
+```
+
+__To fetch artifact from Artifactory:__
+
+For getting artifact from JFrog Artifactory, requires an additional variable (the API KEY) to be passed in for authenticating with Artifactory's REST API.
+
+e.g. 
+```bash
+ansible-playbook -i hosts deploy_microservicejava.yml --extra-vars="VERSION=1.0.0-SNAPSHOT, REPOSITORY=ARTIFACTORY, ARTIFACTORY_API_KEY=[your API KEY]"
+```
+
+## Deploy microservice-nodejs
+
+And similarly for microservice nodejs
 
 ```bash
-ansible-playbook -i hosts deploy_microservicejava.yml --extra-vars="VERSION=1.0.0-SNAPSHOT"
+ansible-playbook -i hosts deploy_microservicenodejs.yml --extra-vars="...."
 ```
+
+See section above.
+
