@@ -21,8 +21,17 @@
     mode: 0755
     force: yes
 
-- name: Starting app - microservice-nodejs-{{ VERSION }}.js
-  shell: "nohup node microservice-nodejs-{{ VERSION }}.js > /dev/null 2>&1 & echo $! > app.pid"
+- name: Download app from Artifactory
+  get_url:
+    dest: /home/ec2-user/app/
+    url: "{{ ARTIFACTORY_REPOSITORY_URL }}/generic-local/{{ VERSION }}/app.js"
+    headers: 
+      X-JFrog-Art-Api: "{{ ARTIFACTORY_API_KEY }}"
+    mode: 0755
+    force: yes
+
+- name: Starting app - app.js
+  shell: "nohup node app.js > /dev/null 2>&1 & echo $! > app.pid"
   async: 10
   poll: 0
   args:
