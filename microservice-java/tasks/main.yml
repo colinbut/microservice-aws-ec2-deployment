@@ -26,8 +26,17 @@
    keep_name: yes
    version: "{{ VERSION }}"
 
-- name: Starting app - microservice-java-{{ VERSION }}.jar
-  shell: "nohup java -jar microservice-java-{{ VERSION }}.jar > /dev/null 2>&1 & echo $! > app.pid"
+- name: Download app from Artifactory
+  get_url:
+    dest: /home/ec2-user/app/
+    url: "{{ ARTIFACTORY_REPOSITORY_URL }}/libs-release-local/com/mycompany/microservice-java/microservice-java/{{ VERSION }}/microservice-java-{{ VERSION }}.jar"
+    headers: 
+      X-JFrog-Art-Api: "{{ ARTIFACTORY_API_KEY }}"
+    mode: 0755
+    force: yes
+
+- name: Starting app - app.jar
+  shell: "nohup java -jar app.jar > /dev/null 2>&1 & echo $! > app.pid"
   async: 10
   poll: 0
   args:
